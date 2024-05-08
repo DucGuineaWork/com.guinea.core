@@ -1,0 +1,7 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <ui:Label tabindex="-1" text="Effect to create " display-tooltip-when-elided="true" name="Label" />
+    <ui:Foldout text="Effects" name="DefaultInspector" />
+    <ui:VisualElement name="Bottom" style="flex-grow: 0; background-color: rgba(0, 0, 0, 0); align-items: flex-end;">
+        <ui:Button text="+" display-tooltip-when-elided="true" name="AddItem" style="-unity-font-style: bold; font-size: 16px; width: 24px; height: 24px;" />
+    </ui:VisualElement>
+</ui:UXML>

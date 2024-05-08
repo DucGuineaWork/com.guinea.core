@@ -1,0 +1,16 @@
+{
+    "name": "Guinea.Core.Editor",
+    "rootNamespace": "",
+    "references": [
+        "GUID:66347878892e7834590a71dd41b662ca"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

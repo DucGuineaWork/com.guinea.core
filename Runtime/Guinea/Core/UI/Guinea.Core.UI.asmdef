@@ -1,0 +1,16 @@
+{
+    "name": "Guinea.Core.UI",
+    "rootNamespace": "",
+    "references": [
+        "GUID:fbefcf3ebf551094587665ad75552fab"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

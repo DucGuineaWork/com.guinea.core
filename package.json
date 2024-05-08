@@ -1,15 +1,14 @@
 {
-
-    "name": "com.guinea.core",
-    "version": "0.1.0",
-    "displayName": "Guinea Core",
-    "description": "Guinea Core Package",
-    "unity": "2019.1",
-    "dependencies": {
-        "com.unity.textmeshpro":"*"
-    },
-    "keywords": [],
-    "author": {
-        "name": "GuineaPig"
-    }
+  "name": "com.guinea.core",
+  "version": "0.1.0",
+  "displayName": "Guinea Core",
+  "description": "Guinea Core Package",
+  "unity": "2022.3",
+  "dependencies": {
+    "com.unity.textmeshpro": "3.0.6"
+  },
+  "keywords": [],
+  "author": {
+    "name": "GuineaPig"
+  }
 }
