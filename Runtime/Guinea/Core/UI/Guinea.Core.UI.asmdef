@@ -2,7 +2,8 @@
     "name": "Guinea.Core.UI",
     "rootNamespace": "",
     "references": [
-        "GUID:fbefcf3ebf551094587665ad75552fab"
+        "GUID:fbefcf3ebf551094587665ad75552fab",
+        "GUID:6fd3d4c9110bdbe4ebe8c1efb82f8340"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],
