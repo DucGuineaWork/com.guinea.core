@@ -15,6 +15,7 @@ namespace Guinea.Core.UI.Effects
         public override VisualElement CreateInspectorGUI()
         {
             VisualElement inspector = new VisualElement();
+            m_visualTreeAsset = m_visualTreeAsset?? AssetDatabase.LoadAssetAtPath<VisualTreeAsset>("Packages/com.guinea.core/Editor/EffectComponentInspector.uxml");
             m_visualTreeAsset.CloneTree(inspector);
 
             VisualElement defaultInspector = inspector.Q("DefaultInspector");
