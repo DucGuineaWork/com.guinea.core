@@ -77,7 +77,7 @@ namespace Guinea.Core
             if(m_tick < 0)
             {
                 m_tick = 0;
-                GoldMiner_TimerManager.OnTick -= OnTick;
+                TimerManager.OnTick -= OnTick;
                 OnTickChanged?.Invoke(this);
                 OnTimerEnd?.Invoke(this);
                 return;
@@ -96,7 +96,7 @@ namespace Guinea.Core
             if(m_tick < 0)
             {
                 m_tick = 0;
-                GoldMiner_TimerManager.OnTick -= OnTick;
+                TimerManager.OnTick -= OnTick;
                 OnTickChanged?.Invoke(this);
                 OnTimerEnd?.Invoke(this);
                 return;
