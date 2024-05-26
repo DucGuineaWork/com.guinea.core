@@ -68,9 +68,39 @@ namespace Guinea.Core.UI.Menus
             Open<U>(typeof(T), args);
         }
 
-        public void Close<T>() where T : IMenu
+        public void Close<T>(bool refresh=false) where T : IMenu
         {
-            Close(typeof(T));
+            Close(typeof(T), refresh);
+        }
+
+        public void CloseUntil<T>(bool include = false, bool refresh = true) where T : BaseMenu
+        {
+            Logger.Log($"MenuManager::CloseUntil(include={include}): Close until \"{typeof(T)}\"");
+            if (m_menuStack.Any(menu => menu.GetType() == typeof(T)))
+            {
+                while (m_menuStack.Count > 0 && m_menuStack.Peek().GetType() != typeof(T))
+                {
+                    Logger.Log($"MenuManager::CloseUntil(include={include}): Close until \"{typeof(T)}\" close {m_menuStack.Peek().GetType()}");
+                    CloseTopMenu(false);
+                }
+
+                if (include)
+                {
+                    CloseTopMenu(false);
+                }
+
+                if (refresh)
+                {
+                    foreach (IMenu menu in m_menuStack)
+                    {
+                        menu.Refresh();
+                        Logger.Log($"MenuManager::CloseUntil(): Refresh \"{menu.GetType()}\"");
+                    }
+                }
+                Logger.Log($"MenuManager::CloseUntil(include={include}): Close until \"{typeof(T)}\" COMPLETE");
+                return;
+            }
+            Logger.LogWarning($"MenuManager::CloseUntil(): IMenu {typeof(T)} not in the stack");
         }
 
         private void Open<U>(Type menuType, U args)
@@ -99,7 +129,6 @@ namespace Guinea.Core.UI.Menus
                     propertyInfo.SetValue(instance, this);
                     Logger.Assert(instance != null, $"Could not get IMenu from {instance.GetType()}");
                 }
-                instance.transform.SetAsLastSibling();
                 if (instance.ChildrenMenu != null)
                 {
                     foreach (IMenu childMenu in menu.ChildrenMenu)
@@ -107,6 +136,17 @@ namespace Guinea.Core.UI.Menus
                         Register(childMenu);
                     }
                 }
+
+                if (m_menuStack.Count > 0 && instance.DisableParent)
+                {
+                    DisableParentMenus(instance);
+                }
+
+                if (m_menuStack.Count > 0 && instance.CloseSameLayer)
+                {
+                    CloseSameLayerMenus(instance);
+                }
+                instance.transform.SetAsLastSibling();
 
                 instance.OnOpenMenu(args);
                 instance.gameObject.SetActive(true);
@@ -116,13 +156,42 @@ namespace Guinea.Core.UI.Menus
             }
         }
 
-        public void Close(Type menuType)
+        public void Close(Type menuType, bool refresh=false)
         {
             Logger.Assert(m_menuStack.Count > 0 && m_menuStack.Peek().GetType() == menuType, $"IMenu {menuType} not on the top of the stack");
-            CloseTopMenu();
+            CloseTopMenu(refresh);
         }
 
-        private void CloseTopMenu()
+        private void DisableParentMenus(IMenu currentTopMenu)
+        {
+            foreach (IMenu menu in m_menuStack)
+            {
+                if (menu.ChildrenMenu != null && Array.Find(menu.ChildrenMenu, m => m.GetType() == currentTopMenu.GetType()) != null)
+                {
+                    menu.gameObject.SetActive(false);
+                    break;
+                }
+
+                if (menu.DisableParent) break; // * Some menus already disabled before hand
+            }
+        }
+
+        private void CloseSameLayerMenus(IMenu currentTopMenu)
+        {
+            foreach (IMenu menu in m_menuStack)
+            {
+                if (menu.Layer == currentTopMenu.Layer)
+                {
+                    CloseTopMenu(false);
+                }
+                else
+                {
+                    break;
+                }
+            }
+        }
+
+        private void CloseTopMenu(bool refresh)
         {
             Logger.Assert(m_menuStack.Count > 0, $"No menu opened in stack to close");
             IMenu menu = m_menuStack.Pop();
@@ -135,6 +204,7 @@ namespace Guinea.Core.UI.Menus
                     Unregister(childMenu);
                 }
             }
+
             if (menu.DestroyWhenClosed)
             {
                 Destroy(menu.gameObject);
@@ -144,6 +214,20 @@ namespace Guinea.Core.UI.Menus
                 menu.gameObject.SetActive(false);
             }
 
+            foreach(IMenu m in m_menuStack)
+            {
+                m.gameObject.SetActive(true);
+                if(refresh)
+                {
+                    m.Refresh();
+                }
+
+                if(m.DisableParent)
+                {
+                    break;
+                }
+            }
+
             if (m_menuStack.Count > 0)
             {
                 OnMenuStackChanged(m_menuStack.Peek());
@@ -151,12 +235,6 @@ namespace Guinea.Core.UI.Menus
         }
         private void OnBackKeyEvent()
         {
-            // if(m_dropdownManager!=null && m_dropdownManager.HasDropdownOpened)
-            // {
-            //     m_dropdownManager.CloseAll();
-            //     return;
-            // }
-
             if (m_menuStack.Count > 0)
             {
                 m_menuStack.Peek().OnBackKeyEvent();
