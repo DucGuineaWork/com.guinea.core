@@ -36,5 +36,13 @@ namespace Guinea.Core
                 m_fpsMaxText.text = $"Max: {m_maxFps}";
             }
         }
+
+        private void OnApplicationPause(bool pauseStatus)
+        {
+            if(!pauseStatus)
+            {
+                m_FpsNextPeriod = Time.realtimeSinceStartup + fpsMeasurePeriod;
+            }
+        }
     }
 }
