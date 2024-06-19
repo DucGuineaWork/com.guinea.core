@@ -1,16 +1,17 @@
 using System;
 using System.Collections.Generic;
-using DG.Tweening;
 using UnityEngine;
 
 namespace Guinea.Core.UI.Effects
 {
     [ExecuteInEditMode]
     [DisallowMultipleComponent]
-    public class EffectComponent : BaseEffectComponent
+    [CreateAssetMenu(fileName ="EffectSO",menuName ="SO/EffectSO")]
+    public class EffectSO: ScriptableObject
     {
         [SerializeReference]
-        public List<IEffect> m_effects = new List<IEffect>();
+        private List<IEffect> m_effects = new List<IEffect>();
+        public List<IEffect> Effects =>m_effects;
 
         public void AddEffect(Type type)
         {
@@ -18,13 +19,7 @@ namespace Guinea.Core.UI.Effects
             IEffect instance = Activator.CreateInstance(type) as IEffect;
             m_effects.Add(instance);
         }
-
-        protected override void AddEffects(ref Sequence sequence)
-        {
-            foreach(IEffect effect in m_effects)
-            {
-                effect.InsertTween(ref sequence, gameObject);
-            }
-        }
     }
+
+    
 }
