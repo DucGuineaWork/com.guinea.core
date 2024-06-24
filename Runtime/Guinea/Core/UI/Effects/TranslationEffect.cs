@@ -13,11 +13,25 @@ namespace Guinea.Core.UI.Effects
             Tween tween;
             if(rectTransform)
             {
-                tween = rectTransform.DOAnchorPos3D(rectTransform.anchoredPosition3D + m_value, m_config.duration);
+                if(m_config.isFrom)
+                {
+                    tween = rectTransform.DOAnchorPos3D(rectTransform.anchoredPosition3D + m_value, m_config.duration).From();
+                }
+                else
+                {
+                    tween = rectTransform.DOAnchorPos3D(rectTransform.anchoredPosition3D + m_value, m_config.duration);
+                }
             }
             else
             {
-                tween = go.transform.DOMove(go.transform.position + m_value, m_config.duration);
+                if(m_config.isFrom)
+                {
+                    tween = go.transform.DOMove(go.transform.position + m_value, m_config.duration).From();
+                }
+                else
+                {
+                    tween = go.transform.DOMove(go.transform.position + m_value, m_config.duration);
+                }
             }
             tween.SetEase(m_config.easeType)
             .SetLoops(m_config.loop, m_config.loopType);

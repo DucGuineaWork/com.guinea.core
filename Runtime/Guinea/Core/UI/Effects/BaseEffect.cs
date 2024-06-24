@@ -16,6 +16,7 @@ namespace Guinea.Core.UI.Effects
             public Ease easeType;
             public LoopType loopType;
             public int loop;
+            public bool isFrom;
         }
 
         private void InsertTween_(ref Sequence sequence, Tween tween)

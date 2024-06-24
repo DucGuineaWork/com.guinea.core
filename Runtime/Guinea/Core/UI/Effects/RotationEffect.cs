@@ -10,10 +10,17 @@ namespace Guinea.Core.UI.Effects
         public override Tween CreateTween(GameObject go)
         {
             Quaternion rotation = Quaternion.Euler(m_euler);
-            Tween tween = go.transform.DOLocalRotateQuaternion(rotation * go.transform.localRotation, m_config.duration)
-                .SetEase(m_config.easeType)
+            Tween tween;
+            if(m_config.isFrom)
+            {
+                tween = go.transform.DOLocalRotateQuaternion(rotation * go.transform.localRotation, m_config.duration).From();
+            }
+            else
+            {
+                tween = go.transform.DOLocalRotateQuaternion(rotation * go.transform.localRotation, m_config.duration);
+            }
+            tween.SetEase(m_config.easeType)
                 .SetLoops(m_config.loop, m_config.loopType);
-
             return tween;
         }
     }
