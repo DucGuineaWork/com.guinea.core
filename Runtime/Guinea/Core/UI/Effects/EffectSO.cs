@@ -6,7 +6,7 @@ namespace Guinea.Core.UI.Effects
 {
     [ExecuteInEditMode]
     [DisallowMultipleComponent]
-    [CreateAssetMenu(fileName ="EffectSO",menuName ="SO/EffectSO")]
+    [CreateAssetMenu(fileName ="AssetEffectSO",menuName ="SO/EffectSO")]
     public class EffectSO: ScriptableObject
     {
         [SerializeReference]
