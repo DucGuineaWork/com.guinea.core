@@ -1,14 +1,14 @@
 using System;
-using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace Guinea.Core
 {
     public class FPSCounter : MonoBehaviour 
     {
-        [SerializeField]TextMeshProUGUI m_fpsText;
-        [SerializeField]TextMeshProUGUI m_fpsMinText;
-        [SerializeField]TextMeshProUGUI m_fpsMaxText;
+        [SerializeField]Text m_fpsText;
+        [SerializeField]Text m_fpsMinText;
+        [SerializeField]Text m_fpsMaxText;
         const float fpsMeasurePeriod = 0.5f;
         private int m_FpsAccumulator = 0;
         private float m_FpsNextPeriod = 0;

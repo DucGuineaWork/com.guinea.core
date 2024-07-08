@@ -5,7 +5,6 @@
   "description": "Guinea Core Package",
   "unity": "2022.3",
   "dependencies": {
-    "com.unity.textmeshpro": "3.0.6"
   },
   "keywords": [],
   "author": {
