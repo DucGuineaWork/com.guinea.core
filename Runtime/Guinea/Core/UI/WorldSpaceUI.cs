@@ -11,7 +11,7 @@ namespace Guinea.Core.UI
             RectTransform element;
             if (!s_attachedElements.TryGetValue(key, out element))
             {
-                element = Instantiate(prefab, parent);
+                element = GameObject.Instantiate(prefab, parent);
                 s_attachedElements.Add(key,element);
             }
             return element;
@@ -34,7 +34,7 @@ namespace Guinea.Core.UI
             {
                 if(element!=null)
                 {
-                    Destroy(element.gameObject);
+                    GameObject.Destroy(element.gameObject);
                 }
             }
         }
