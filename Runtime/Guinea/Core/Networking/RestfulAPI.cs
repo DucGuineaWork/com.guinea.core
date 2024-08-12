@@ -1,7 +1,11 @@
+using System.Text;
+using System.Linq;
 using System.Threading;
+using System.Reflection;
 using System.Collections.Generic;
 using UnityEngine.Networking;
 using Cysharp.Threading.Tasks;
+using System;
 
 namespace Guinea.Core
 {
@@ -42,12 +46,41 @@ namespace Guinea.Core
                 }
             }
         }
+        
+        public static string BuildQueryString(object o)
+        {
+            if (o == null)
+            {
+                throw new ArgumentNullException(nameof(o));
+            }
+
+            var fields = o.GetType().GetFields(BindingFlags.Public | BindingFlags.Instance);
+            var queryString = new StringBuilder("?");
+
+            foreach (var field in fields)
+            {
+                var value = field.GetValue(o);
+                if (value != null)
+                {
+                    queryString.AppendFormat("{0}={1}&", field.Name, Uri.EscapeDataString(value.ToString()));
+                }
+            }
+
+            // Remove the last '&' if present
+            if (queryString.Length > 1)
+            {
+                queryString.Length--;
+            }
+
+            return queryString.ToString();
+        }
 
         private static UniTask<UnityWebRequest> SendRequest(UnityWebRequest request, int timeout, CancellationToken cancellationToken = default)
         {
             request.timeout = timeout;
             return request.SendWebRequest().WithCancellation(cancellationToken);
         }
+
     }
 
     [System.Serializable]
