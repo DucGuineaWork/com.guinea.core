@@ -54,6 +54,7 @@ namespace Guinea.Core.ObjectPools
                 m_pool.Add(instance);
             }
             instance.transform.position = position;
+            instance.transform.rotation = rotation;
             instance.gameObject.SetActive(true);
             return instance;
         }
