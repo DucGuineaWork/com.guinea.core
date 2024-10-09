@@ -12,9 +12,12 @@ namespace Guinea.Core.ObjectPools
             {
                 // TODO: Assert already exists
             }
+            else
+            {
+                SimplePool<T> pool = new SimplePool<T>(prefab, count);
+                m_container.Add(key, pool);
+            }
 
-            SimplePool<T> pool = new SimplePool<T>(prefab, count);
-            m_container.Add(key, pool);
         }
 
         public void CleanPool(string key)
@@ -23,9 +26,11 @@ namespace Guinea.Core.ObjectPools
             {
                 // TODO: Assert not exists
             }
-
-            m_container[key].CleanUp();
-            m_container.Remove(key);
+            else
+            {
+                m_container[key].CleanUp();
+                m_container.Remove(key);
+            }
         }
 
         public void ClearPool(string key)
@@ -34,7 +39,10 @@ namespace Guinea.Core.ObjectPools
             {
                 // TODO: Assert not exists
             }
-            m_container[key].Clear();
+            else
+            {
+                m_container[key].Clear();
+            }
         }
 
         public T GetPool(string key, Transform parent = null, Vector3 position = default(Vector3), Quaternion rotation = default(Quaternion))
