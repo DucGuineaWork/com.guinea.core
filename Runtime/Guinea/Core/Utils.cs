@@ -51,7 +51,7 @@ namespace Guinea.Core
 		    return points;
 	    }
 
-        static bool IsValid(Vector2 candidate, Vector2 sampleRegionSize, float cellSize, float radius, List<Vector2> points, int[,] grid) 
+        private static bool IsValid(Vector2 candidate, Vector2 sampleRegionSize, float cellSize, float radius, List<Vector2> points, int[,] grid) 
         {
             if (candidate.x >=0 && candidate.x < sampleRegionSize.x && candidate.y >= 0 && candidate.y < sampleRegionSize.y) 
             {
@@ -79,6 +79,11 @@ namespace Guinea.Core
                 return true;
             }
             return false;
+        }
+    
+        public static bool IsQuaternionEqual(Quaternion left, Quaternion right, float tolerance = 0.001f)
+        {
+            return Mathf.Abs(Quaternion.Dot(left, right)) > 1.0f - tolerance;
         }
     }
 
